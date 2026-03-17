@@ -1,16 +1,20 @@
 <header class="header">
-    <h1 style="text-align: center; font-size: 50px; color:antiquewhite">Catalogo</h1>
-    <p style="font-size: 25px; color:antiquewhite">Productos en stock: {{inStockCount()}}</p>
+  <h1 style="text-align: center; font-size: 50px; color: antiquewhite">Catalogo</h1>
+  <p style="font-size: 25px; color: antiquewhite">Productos en stock: {{ inStockCount() }}</p>
 </header>
-@if(products().length === 0){
-    <p>Cargando productos (o revisa la ruta del XML).</p>
-}@else{
-    <section class="grid">
+@if (products().length === 0) {
+  <p>Cargando productos (o revisa la ruta del XML).</p>
+} @else {
+  <section class="grid">
     @for (p of products(); track p.id) {
-        <app-product-card [product]="p" (add)="agregar($event)"></app-product-card>
+      <app-product-card [product]="p" (add)="agregar($event)"></app-product-card>
     }
-    </section>
+  </section>
 }
-<hr class="sep"/>
-<app-carrito></app-carrito>
-
+<div class="toast-container">
+  @for (t of toasts(); track t.id) {
+    <div class="toast">
+      {{ t.texto }}
+    </div>
+  }
+</div>

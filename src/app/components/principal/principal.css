@@ -1,0 +1,24 @@
+
+.info{
+  text-align:center;
+  padding:50px 20px;
+  background: linear-gradient(135deg, #0e6564, #96968b);
+  color: white;
+  margin-top: 50px;
+  align-items: center;
+}
+
+.info h1{
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+.info p{
+  font-size:20px;
+  margin-bottom:20px;
+}
+
+li{
+    list-style: none;
+    font-size: 25px;
+}

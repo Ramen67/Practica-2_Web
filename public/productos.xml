@@ -3,51 +3,51 @@
 
   <product>
     <id>1</id>
-    <name>Audifonos</name>
-    <price>599</price>
-    <imageUrl>ACCAFT018_FG.webp</imageUrl>
-    <category>Audio</category>
-    <description>Audifonos inalambricos</description>
+    <name>Martillo</name>
+    <price>250</price>
+    <imageUrl>martillo.webp</imageUrl>
+    <category>Herramientas</category>
+    <description>Martillo de acero con mango de acero de 20oz</description>
     <inStock>true</inStock>
   </product>
 
   <product>
     <id>2</id>
-    <name>Bocina</name>
-    <price>700</price>
-    <imageUrl>bici.webp</imageUrl>
-    <category>Audio</category>
-    <description>Bocina inalambrica</description>
+    <name>Taladro</name>
+    <price>1800</price>
+    <imageUrl>taladro.webp</imageUrl>
+    <category>Herramientas eléctricas</category>
+    <description>Taladro eléctrico de pila con accesorios</description>
     <inStock>true</inStock>
   </product>
 
   <product>
     <id>3</id>
-    <name>Computadora</name>
-    <price>7000</price>
-    <imageUrl>tope.webp</imageUrl>
-    <category>Tecnologia</category>
-    <description>Laptop con 16 GB de RAM util para la escuela</description>
+    <name>Juego de destornilladores</name>
+    <price>350</price>
+    <imageUrl>destornilladores.webp</imageUrl>
+    <category>Herramientas</category>
+    <description>Set de 7 destornilladores de acero inoxidable</description>
     <inStock>true</inStock>
   </product>
 
   <product>
     <id>4</id>
-    <name>Computadora</name>
-    <price>7000</price>
-    <imageUrl>tope.webp</imageUrl>
-    <category>Tecnologia</category>
-    <description>Laptop con 16 GB de RAM util para la escuela</description>
+    <name>Cinta métrica</name>
+    <price>120</price>
+    <imageUrl>cinta_metrica.webp</imageUrl>
+    <category>Medición</category>
+    <description>Cinta métrica de 10 metros con carcasa de plástico</description>
     <inStock>true</inStock>
   </product>
 
   <product>
     <id>5</id>
-    <name>Computadora</name>
-    <price>7000</price>
-    <imageUrl>tope.webp</imageUrl>
-    <category>Tecnologia</category>
-    <description>Laptop con 16 GB de RAM util para la escuela</description>
+    <name>Pintura acrílica</name>
+    <price>450</price>
+    <imageUrl>pintura_acrilica.webp</imageUrl>
+    <category>Materiales</category>
+    <description>Envase de 19 litros de pintura acrílica para interiores</description>
     <inStock>true</inStock>
   </product>
 

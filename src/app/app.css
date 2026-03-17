@@ -1,8 +1,8 @@
 
 .container {
-    background-color: #042f2e;
+  background-color: #042f2e;
   max-width: 1100px;
-  margin: 24px auto;
+  margin: 10px auto;
   padding: 0 16px;
   font-family: system-ui, Arial, sans-serif;
 }

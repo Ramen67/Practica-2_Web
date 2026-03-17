@@ -1,4 +1,6 @@
-.header{margin-bottom: 16px;}
+.header{
+    margin-bottom: 20px;
+}
 body{
     background-color: #042f2e;
 }
@@ -11,4 +13,34 @@ p{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 16px;
+}
+
+.toast-container{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast{
+  background: #064847;
+  color: whitesmoke;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: aparecer 1s ease;
+}
+
+@keyframes aparecer{
+  from{
+    transform: translateY(20px);
+    opacity:0;
+  }
+  to{
+    transform: translateY(0);
+    opacity:1;
+  }
 }

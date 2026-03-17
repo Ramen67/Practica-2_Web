@@ -10,11 +10,18 @@ export class CarritoService {
   productos = this.productosSignal.asReadonly();
 
   agregar(producto: Product) {
-    this.productosSignal.update(lista => [...lista, producto]);
+    this.productosSignal.update((lista) => [...lista, producto]);
   }
 
   quitar(id: number) {
-    this.productosSignal.update(lista => lista.filter(p => p.id !== id));
+    this.productosSignal.update((lista) => {
+      const index = lista.findIndex((p) => p.id === id);
+      if (index === -1) return lista;
+
+      const nuevaLista = [...lista];
+      nuevaLista.splice(index, 1);
+      return nuevaLista;
+    });
   }
 
   vaciar() {
