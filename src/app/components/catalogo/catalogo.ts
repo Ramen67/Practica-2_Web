@@ -16,7 +16,6 @@ import { Navbar } from '../navbar/navbar';
 })
 export class CatalogoComponent {
   products = signal<Product[]>([]);
-  inStockCount = computed(() => this.products().filter((p) => p.inStock).length);
   mensaje = signal('');
   mostrarMensaje = signal(false);
   toasts = signal<{ id: number; texto: string }[]>([]);
@@ -32,7 +31,7 @@ export class CatalogoComponent {
   }
   agregar(producto: Product) {
     this.carritoService.agregar(producto);
-
+    
     const id = this.toastId++;
 
     this.toasts.update((lista) => [

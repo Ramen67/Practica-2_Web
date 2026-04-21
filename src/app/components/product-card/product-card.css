@@ -2,7 +2,10 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
+  height: 400px;
   background: #fff;
+  display: flex;
+  flex-direction: column;
 }
 .img {
   margin-top: 10px;
@@ -13,8 +16,10 @@
 }
 .body {
   padding: 12px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+  height: 100%;
 }
 .top {
   display: flex;
@@ -54,6 +59,7 @@
   padding: 10px 12px;
   cursor: pointer;
   transition-duration: .5s;
+  margin-top: auto;
 }
 .btn:hover{
     background-color: #d2d2d2;    
