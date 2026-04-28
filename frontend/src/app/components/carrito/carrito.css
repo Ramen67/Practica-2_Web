@@ -1,4 +1,4 @@
-.cart{
+.cart {
   margin-top: 30px;
 }
 .title {
@@ -9,6 +9,63 @@
 .empty {
   margin: 0;
   color: #6b7280;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  background-color: #467e71;
+  border: 1px solid #0b7b6a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cart-table thead {
+  background-color: #0b7b6a;
+  color: #f0fdfa;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #0b7b6a;
+  color: #f0fdfa;
+}
+
+.cart-table tbody tr:hover {
+  background-color: #54a99a;
+}
+
+.stock-note {
+  font-size: 14px;
+  color: #d1fae5;
+  background-color: #0f766e;
+}
+
+.cart-table td:last-child {
+  border-bottom: none;
+}
+
+.btn-qty {
+  background-color: #0b7b6a;
+  color: #f0fdfa;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-qty:hover {
+  background-color: #054f48;
+}
+
+.btn-qty:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
 }
 
 .list {
@@ -72,4 +129,12 @@
 }
 .btn.purple:hover {
   background-color: #bb7d11;
+}
+.btn.success {
+  background: #10b981;
+  color: #fff;
+  transition-duration: 0.4s;
+}
+.btn.success:hover {
+  background-color: #047857;
 }

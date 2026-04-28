@@ -3,7 +3,7 @@ import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-principal',
-  imports: [Navbar],
+  imports: [],
   templateUrl: './principal.html',
   styleUrl: './principal.css',
 })

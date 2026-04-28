@@ -1,54 +1,100 @@
 import { Injectable, signal } from '@angular/core';
 import { Product } from '../models/producto.model';
+import { CartItem } from '../models/carrito-item.model';
 
 @Injectable({ providedIn: 'root' })
 export class CarritoService {
-  // Lista reactiva del carrito
-  private productosSignal = signal<Product[]>([]);
-
-  // Exponer como readonly
-  productos = this.productosSignal.asReadonly();
+  private itemsSignal = signal<CartItem[]>([]);
+  items = this.itemsSignal.asReadonly();
 
   agregar(producto: Product) {
-    this.productosSignal.update((lista) => [...lista, producto]);
-  }
+    this.itemsSignal.update((lista) => {
+      // Buscar si el producto ya existe en el carrito
+      const existente = lista.find((item) => item.id === producto.id);
 
-  cantidadEnCarrito(id: number): number {
-    return this.productosSignal().filter((p) => p.id === id).length;
-  }
+      if (existente) {
+        if (existente.cantidad >= existente.stock) {
+          return lista;
+        }
 
-  quitar(id: number) {
-    this.productosSignal.update((lista) => {
-      const index = lista.findIndex((p) => p.id === id);
-      if (index === -1) return lista;
+        // Si existe, aumentar cantidad
+        return lista.map((item) =>
+          item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item,
+        );
+      } else {
+        if (producto.stock <= 0) {
+          return lista;
+        }
 
-      const nuevaLista = [...lista];
-      nuevaLista.splice(index, 1);
-      return nuevaLista;
+        // Si no existe, agregarlo con cantidad 1
+        return [...lista, { ...producto, cantidad: 1 }];
+      }
     });
   }
 
+  aumentarCantidad(id: number) {
+    this.itemsSignal.update((lista) =>
+      lista.map((item) =>
+        item.id === id && item.cantidad < item.stock
+          ? { ...item, cantidad: item.cantidad + 1 }
+          : item,
+      ),
+    );
+  }
+
+  disminuirCantidad(id: number) {
+    this.itemsSignal.update((lista) =>
+      lista
+        .map((item) =>
+          item.id === id && item.cantidad > 1 ? { ...item, cantidad: item.cantidad - 1 } : item,
+        )
+        .filter((item) => item.cantidad > 0),
+    );
+  }
+
+  cantidadEnCarrito(id: number): number {
+    const item = this.itemsSignal().find((p) => p.id === id);
+    return item ? item.cantidad : 0;
+  }
+
+  stockDisponible(id: number): number {
+    const item = this.itemsSignal().find((p) => p.id === id);
+    if (!item) {
+      return 0;
+    }
+    return Math.max(item.stock - item.cantidad, 0);
+  }
+
+  puedeAumentar(id: number): boolean {
+    const item = this.itemsSignal().find((p) => p.id === id);
+    return item ? item.cantidad < item.stock : false;
+  }
+
+  quitar(id: number) {
+    this.itemsSignal.update((lista) => lista.filter((item) => item.id !== id));
+  }
+
   vaciar() {
-    this.productosSignal.set([]);
+    this.itemsSignal.set([]);
   }
 
   total(): number {
-    return this.productosSignal().reduce((acc, p) => acc + p.price, 0);
+    return this.itemsSignal().reduce((acc, item) => acc + item.price * item.cantidad, 0);
   }
 
   exportarXML() {
-    const productos = this.productosSignal();
-
-    // Estructura XML manual
+    const items = this.itemsSignal();
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<recibo>\n`;
 
-    for (const p of productos) {
+    for (const item of items) {
       xml += `  <producto>\n`;
-      xml += `    <id>${p.id}</id>\n`;
-      xml += `    <nombre>${this.escapeXml(p.name)}</nombre>\n`;
-      xml += `    <precio>${p.price}</precio>\n`;
-      if (p.description) {
-        xml += `    <descripcion>${this.escapeXml(p.description)}</descripcion>\n`;
+      xml += `    <id>${item.id}</id>\n`;
+      xml += `    <nombre>${this.escapeXml(item.name)}</nombre>\n`;
+      xml += `    <precio>${item.price}</precio>\n`;
+      xml += `    <cantidad>${item.cantidad}</cantidad>\n`;
+      xml += `    <subtotal>${item.price * item.cantidad}</subtotal>\n`;
+      if (item.description) {
+        xml += `    <descripcion>${this.escapeXml(item.description)}</descripcion>\n`;
       }
       xml += `  </producto>\n`;
     }

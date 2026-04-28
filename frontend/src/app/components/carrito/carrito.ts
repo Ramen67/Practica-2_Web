@@ -1,9 +1,9 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { CarritoService } from '../../services/carrito.service';
-import { Product } from '../../models/producto.model';
 import { Signal } from '@angular/core';
-
+import { CartItem } from '../../models/carrito-item.model';
 
 @Component({
   selector: 'app-carrito',
@@ -13,23 +13,45 @@ import { Signal } from '@angular/core';
   styleUrl: './carrito.css',
 })
 export class Carrito {
-  carrito: Signal<Product[]>;
+  private router = inject(Router);
+  private carritoService = inject(CarritoService);
+
+  carrito: Signal<CartItem[]>;
   total = computed(() => this.carritoService.total());
 
-  constructor(private carritoService: CarritoService){
-    this.carrito = this.carritoService.productos;
+  constructor() {
+    this.carrito = this.carritoService.items;
   }
 
-  quitar(id:number){
+  quitar(id: number) {
     this.carritoService.quitar(id);
   }
 
-  vaciar(){
+  aumentar(id: number) {
+    this.carritoService.aumentarCantidad(id);
+  }
+
+  disminuir(id: number) {
+    this.carritoService.disminuirCantidad(id);
+  }
+
+  puedeAumentar(id: number) {
+    return this.carritoService.puedeAumentar(id);
+  }
+
+  stockDisponible(id: number) {
+    return this.carritoService.stockDisponible(id);
+  }
+
+  vaciar() {
     this.carritoService.vaciar();
   }
 
-  exportarXML(){
+  exportarXML() {
     this.carritoService.exportarXML();
   }
 
+  irACheckout() {
+    this.router.navigate(['/checkout']);
+  }
 }

@@ -1,28 +1,59 @@
-<section class = "cart">
-    <h2 class = "title">Carrito</h2>
+<section class="cart">
+  <h2 class="title">Carrito</h2>
 
-    @if (carrito().length === 0 ) {
-        <p class="empty">Tu carrito esta vacio.</p>
-    }@else {
-        <ul class="list">
-            @for(producto of carrito(); track producto.id){
-                <li class="item">
-                    <span class="line">
-                        {{producto.name}} - {{producto.price | currency:'MXN'}}
-                    </span>
-
-                    <button class="btn danger" (click)="quitar(producto.id)">
-                        Quitar
-                    </button>
-                </li>
-            }
-        </ul>
-        <div class="total">
-            Total: {{total()|currency:'MXN'}}
-        </div>
-        <div class="actions">            
-            <button class="btn purple" (click)="vaciar()" >Vaciar carrito</button>
-            <button class="btn" (click)="exportarXML()">Exportar XML</button>
-        </div>
-    }
+  @if (carrito().length === 0) {
+    <p class="empty">Tu carrito esta vacio.</p>
+  } @else {
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (producto of carrito(); track producto.id) {
+          <tr>
+            <td>{{ producto.name }}</td>
+            <td>{{ producto.price | currency: 'MXN' }}</td>
+            <td>
+              <button
+                class="btn-qty"
+                (click)="disminuir(producto.id)"
+                [disabled]="producto.cantidad <= 1"
+              >
+                -
+              </button>
+              {{ producto.cantidad }}
+              <button
+                class="btn-qty"
+                (click)="aumentar(producto.id)"
+                [disabled]="!puedeAumentar(producto.id)"
+              >
+                +
+              </button>
+            </td>
+            <td>{{ producto.price * producto.cantidad | currency: 'MXN' }}</td>
+            <td>
+              <button class="btn danger" (click)="quitar(producto.id)">Quitar</button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" class="stock-note">
+              Stock disponible: {{ stockDisponible(producto.id) }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="total">Total: {{ total() | currency: 'MXN' }}</div>
+    <div class="actions">
+      <button class="btn purple" (click)="vaciar()">Vaciar carrito</button>
+      <button class="btn" (click)="exportarXML()">Exportar XML</button>
+      <button class="btn success" (click)="irACheckout()">Ir al pago</button>
+    </div>
+  }
 </section>

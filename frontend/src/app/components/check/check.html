@@ -1,0 +1,66 @@
+<section class="checkout">
+  <h2>Resumen de compra</h2>
+
+  <div class="items-summary">
+    <h3>Productos</h3>
+    @if (carrito().length === 0) {
+      <p>Tu carrito está vacío</p>
+    } @else {
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of carrito(); track item.id) {
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>{{ item.price | currency: 'MXN' }}</td>
+              <td>{{ item.price * item.cantidad | currency: 'MXN' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+
+  <div class="total-section">
+    <h3>Total: {{ total() | currency: 'MXN' }}</h3>
+  </div>
+
+  @if (error()) {
+    <div class="error-message">
+      {{ error() }}
+    </div>
+  }
+
+  @if (paymentApproved()) {
+    <div class="success-message">¡Pago completado exitosamente! Redirigiendo...</div>
+  }
+
+  @if (!paymentApproved()) {
+    <div class="actions">
+      @if (!orderId()) {
+        <button
+          class="btn primary"
+          (click)="crearOrdenPayPal()"
+          [disabled]="loading() || carrito().length === 0"
+        >
+          {{ loading() ? 'Creando orden...' : 'Crear orden PayPal' }}
+        </button>
+      } @else {
+        <div class="paypal-section">
+          <p>Orden creada: {{ orderId() }}</p>
+          <p>Completa el pago con el botón de PayPal</p>
+          <div #paypalButtonContainer id="paypal-button-container"></div>
+        </div>
+      }
+      <button class="btn" (click)="volver()">Volver al carrito</button>
+    </div>
+  }
+</section>

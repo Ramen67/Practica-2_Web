@@ -1,0 +1,146 @@
+.checkout {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #042f2e;
+  border-radius: 10px;
+}
+
+.checkout h2 {
+  font-size: 28px;
+  color: antiquewhite;
+  margin-bottom: 20px;
+}
+
+.checkout h3 {
+  font-size: 20px;
+  color: #f0fdfa;
+  margin-bottom: 15px;
+}
+
+.items-summary {
+  margin-bottom: 20px;
+  background-color: #467e71;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  background-color: #54a99a;
+  border: 1px solid #0b7b6a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.items-table thead {
+  background-color: #0b7b6a;
+  color: #f0fdfa;
+}
+
+.items-table th,
+.items-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #0b7b6a;
+  color: #f0fdfa;
+}
+
+.items-table tbody tr:hover {
+  background-color: #467e71;
+}
+
+.total-section {
+  background-color: #0b7b6a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+  color: #f0fdfa;
+}
+
+.total-section h3 {
+  font-size: 24px;
+  margin: 0;
+  color: #10b981;
+}
+
+.error-message {
+  background-color: #ef4444;
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  background-color: #10b981;
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.paypal-section {
+  background-color: #54a99a;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  color: #f0fdfa;
+}
+
+.paypal-section p {
+  margin: 5px 0;
+}
+
+#paypal-button-container {
+  margin: 15px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.btn {
+  width: 170px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+  transition-duration: 0.5s;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: rgb(212, 203, 194);
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: #10b981;
+  color: #fff;
+}
+
+.btn.primary:hover:not(:disabled) {
+  background-color: #047857;
+}
+
+.btn.secondary {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.btn.secondary:hover:not(:disabled) {
+  background-color: #bb7d11;
+}
