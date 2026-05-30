@@ -1,0 +1,100 @@
+<div class="register-container">
+  <div class="register-box">
+    <h2>Crear Cuenta</h2>
+
+    <form (ngSubmit)="register()">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          [(ngModel)]="nombre"
+          name="nombre"
+          placeholder="Tu nombre"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="tu@email.com"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="domicilio">Domicilio:</label>
+        <input
+          type="text"
+          id="domicilio"
+          [(ngModel)]="domicilio"
+          name="domicilio"
+          placeholder="Calle, numero, colonia, ciudad"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="contrasenia">Contrasena:</label>
+        <input
+          type="password"
+          id="contrasenia"
+          [(ngModel)]="contrasenia"
+          name="contrasenia"
+          placeholder="Tu contrasena"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirmarContrasenia">Confirmar contrasena:</label>
+        <input
+          type="password"
+          id="confirmarContrasenia"
+          [(ngModel)]="confirmarContrasenia"
+          name="confirmarContrasenia"
+          placeholder="Confirma tu contrasena"
+          required
+        />
+      </div>
+
+      <div class="legal-links">
+        <a [href]="terminosUrl" target="_blank" rel="noopener">Leer terminos y condiciones</a>
+        <a [href]="avisoPrivacidadUrl" target="_blank" rel="noopener">Leer aviso de privacidad</a>
+      </div>
+
+      <label class="checkbox-field">
+        <input
+          type="checkbox"
+          [(ngModel)]="aceptaTerminos"
+          name="aceptaTerminos"
+          required
+        />
+        <span>Acepto los terminos y condiciones</span>
+      </label>
+
+      <label class="checkbox-field">
+        <input
+          type="checkbox"
+          [(ngModel)]="aceptaPrivacidad"
+          name="aceptaPrivacidad"
+          required
+        />
+        <span>Acepto el aviso de privacidad</span>
+      </label>
+
+      <div *ngIf="error" class="error-message">{{ error }}</div>
+
+      <button type="submit" [disabled]="loading" class="btn-register">
+        {{ loading ? 'Registrando...' : 'Crear Cuenta' }}
+      </button>
+    </form>
+
+    <p class="login-link">Ya tienes cuenta? <a routerLink="/login">Inicia sesion aqui</a></p>
+  </div>
+</div>

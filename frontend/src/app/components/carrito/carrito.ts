@@ -17,6 +17,8 @@ export class Carrito {
   private carritoService = inject(CarritoService);
 
   carrito: Signal<CartItem[]>;
+  subtotal = computed(() => this.carritoService.subtotal());
+  iva = computed(() => this.carritoService.iva());
   total = computed(() => this.carritoService.total());
 
   constructor() {

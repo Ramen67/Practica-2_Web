@@ -1,15 +1,44 @@
+
 <nav class="nav-bar">
   <div class="nav-left">
-    <img src="logo.png" class="logo" />
-    <a routerLink="/principal" style="text-decoration: none;">
-      <span class="titulo">ToolMarket</span>
+    <a routerLink="/principal" class="brand-link" aria-label="Inicio" title="Inicio">
+      <img src="logo.png" class="logo" alt="ToolMarket" />
     </a>
   </div>
 
   <div class="nav-right">
-    <a class="catalogo" routerLink="/catalogo">Catalogo</a>
-    <a routerLink="/carrito">
-      <img src="carrito.png" alt="carrito" class="carrito" />
+    <a class="icon-link" routerLink="/catalogo" aria-label="Catalogo" title="Catalogo">
+      <span class="material-icons" aria-hidden="true">storefront</span>
     </a>
+    @if (!isAdmin()) {
+      <a class="icon-link" routerLink="/carrito" aria-label="Carrito" title="Carrito">
+        <span class="material-icons" aria-hidden="true">
+          {{ tieneProductosEnCarrito() ? 'shopping_cart_checkout' : 'shopping_cart' }}
+        </span>
+      </a>
+    }
+
+    <div *ngIf="isLoggedIn" class="user-menu">
+      <a routerLink="/profile" class="icon-link" aria-label="Mi perfil" title="Mi perfil">
+        <span class="material-icons" aria-hidden="true">account_circle</span>
+      </a>
+      @if (isAdmin()) {
+        <a
+          routerLink="/admin-productos"
+          class="icon-link"
+          aria-label="Inventario"
+          title="Inventario"
+        >
+          <span class="material-icons" aria-hidden="true">inventory_2</span>
+        </a>
+      } @else {
+        <a routerLink="/history" class="icon-link" aria-label="Mis compras" title="Mis compras">
+          <span class="material-icons" aria-hidden="true">receipt_long</span>
+        </a>
+      }
+      <button (click)="logout()" class="icon-link btn-logout" aria-label="Cerrar sesion" title="Cerrar sesion">
+        <span class="material-icons" aria-hidden="true">logout</span>
+      </button>
+    </div>
   </div>
 </nav>

@@ -47,6 +47,8 @@ async function createPaypalOrder(orderData) {
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
+  const taxTotal = Number(orderData.iva ?? itemTotal * 0.16);
+  const orderTotal = Number(orderData.total ?? itemTotal + taxTotal);
 
   const body = {
     intent: "CAPTURE",
@@ -54,11 +56,15 @@ async function createPaypalOrder(orderData) {
       {
         amount: {
           currency_code: "MXN",
-          value: itemTotal.toFixed(2),
+          value: orderTotal.toFixed(2),
           breakdown: {
             item_total: {
               currency_code: "MXN",
               value: itemTotal.toFixed(2),
+            },
+            tax_total: {
+              currency_code: "MXN",
+              value: taxTotal.toFixed(2),
             },
           },
         },

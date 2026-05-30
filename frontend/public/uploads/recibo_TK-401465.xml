@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recibo>
+  <empresa>
+    <nombre>ToolMarket S.A. de C.V.</nombre>
+    <rfc>CTC240315AB1</rfc>
+    <direccion>Av. Vallarta, Col. Americana, Guadalajara, Jalisco, Mexico</direccion>
+    <codigoPostal>44160</codigoPostal>
+  </empresa>
+
+  <encabezado>
+    <folio>TK-401465</folio>
+    <fecha>29/5/2026</fecha>
+    <hora>11:57:19 p.m.</hora>
+  </encabezado>
+
+  <cliente>
+    <nombre>Enrico</nombre>
+    <email>a22300860@ceti.mx</email>
+    <domicilio>Lourdes 120</domicilio>
+  </cliente>
+
+  <productos>
+    <producto>
+      <nombre>Pintura acrilica</nombre>
+      <cantidad>1</cantidad>
+      <precio>$450.00</precio>
+      <subtotal>$450.00</subtotal>
+    </producto>
+    <producto>
+      <nombre>Taladro</nombre>
+      <cantidad>1</cantidad>
+      <precio>$1800.00</precio>
+      <subtotal>$1800.00</subtotal>
+    </producto>
+  </productos>
+
+  <resumen>
+    <subtotal>$2250.00</subtotal>
+    <iva>$360.00</iva>
+    <total>$2610.00</total>
+  </resumen>
+
+  <pago>
+    <metodo>PayPal</metodo>
+    <formaSAT>28 - Tarjeta de debito</formaSAT>
+  </pago>
+
+  <aviso>
+    <mensaje>Conserve este ticket para cualquier aclaracion o facturacion.</mensaje>
+  </aviso>
+</recibo>

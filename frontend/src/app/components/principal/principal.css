@@ -1,24 +1,67 @@
-
-.info{
-  text-align:center;
-  padding:50px 20px;
-  background: linear-gradient(135deg, #0e6564, #96968b);
-  color: white;
-  margin-top: 50px;
-  align-items: center;
+.home-page {
+  min-height: calc(100vh - 75px);
+  display: grid;
+  place-items: center;
+  padding: clamp(24px, 5vw, 56px);
+  background: #042f2e;
+  color: #f8fafc;
 }
 
-.info h1{
-  font-size:48px;
-  margin-bottom:10px;
+.home-content {
+  width: min(100%, 760px);
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 8px;
+  background: rgba(255, 254, 240, 0.14);
+  backdrop-filter: blur(4px);
 }
 
-.info p{
-  font-size:20px;
-  margin-bottom:20px;
+.eyebrow {
+  margin: 0 0 10px;
+  color: #d4af37;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-li{
-    list-style: none;
-    font-size: 25px;
+.home-content h1 {
+  margin: 0;
+  font-size: clamp(36px, 7vw, 64px);
+  line-height: 1;
+}
+
+.intro {
+  max-width: 620px;
+  margin: 18px 0 0;
+  color: #dbe8e5;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.55;
+}
+
+.authors {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.authors h2 {
+  margin: 0 0 14px;
+  color: #fffef0;
+  font-size: clamp(20px, 3vw, 26px);
+}
+
+.authors ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.authors li {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  font-size: clamp(15px, 2vw, 18px);
 }

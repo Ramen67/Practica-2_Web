@@ -8,7 +8,7 @@ import { enviorment } from '../../envioroments/envioroments';
 export class PaypalService {
   private http = inject(HttpClient);
   private apiUrl = `${enviorment.apiUrl}/paypal`;
-  crearOrden(payload: { items: any[]; total: number }) {
+  crearOrden(payload: { items: any[]; subtotal: number; iva: number; total: number }) {
     return this.http.post<{ id: string; status: string }>(`${this.apiUrl}/create-order`, payload);
   }
   capturarOrden(orderId: string, items: any[], total: number) {

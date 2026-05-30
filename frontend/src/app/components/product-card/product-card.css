@@ -2,7 +2,8 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
-  height: 400px;
+  height: 450px;
+  width: 250px;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -53,18 +54,82 @@
 .stock.out {
   color: #dc2626;
 }
+.card-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+}
+
 .btn {
   border: 0;
   border-radius: 10px;
   padding: 10px 12px;
   cursor: pointer;
   transition-duration: .5s;
-  margin-top: auto;
 }
+
+.btn.detail {
+  background: #0f766e;
+  color: #fff;
+}
+
 .btn:hover{
     background-color: #d2d2d2;    
 }
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 30;
+}
+
+.details-modal {
+  width: min(100%, 520px);
+  border-radius: 14px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.modal-close {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #0f766e;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-category {
+  margin: 0 0 12px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.details-modal p {
+  white-space: pre-wrap;
+  color: #334155;
+  line-height: 1.5;
 }

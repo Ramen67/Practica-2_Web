@@ -49,7 +49,11 @@
         }
       </tbody>
     </table>
-    <div class="total">Total: {{ total() | currency: 'MXN' }}</div>
+    <div class="totals-box">
+      <div>Subtotal: {{ subtotal() | currency: 'MXN' }}</div>
+      <div>IVA: {{ iva() | currency: 'MXN' }}</div>
+      <div class="total">Total: {{ total() | currency: 'MXN' }}</div>
+    </div>
     <div class="actions">
       <button class="btn purple" (click)="vaciar()">Vaciar carrito</button>
       <button class="btn success" (click)="irACheckout()">Ir al pago</button>

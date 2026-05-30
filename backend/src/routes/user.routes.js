@@ -1,11 +1,14 @@
-import { Router } from 'express';
-import { verifyToken } from '../middleware/auth.middleware';
-import { getProfile, updateProfile, getOrderHistory } from '../controllers.user.controller';
+const express = require("express");
+const router = express.Router();
+const { verifyToken } = require("../middleware/auth.middleware");
+const {
+  getProfile,
+  updateProfile,
+  getOrderHistory,
+} = require("../controllers/user.controller");
 
-const router = Router();
+router.get("/profile", verifyToken, getProfile);
+router.put("/update-profile", verifyToken, updateProfile);
+router.get("/order-history", verifyToken, getOrderHistory);
 
-router.get('/profile', verifyToken, getProfile);
-router.put('/update-profile', verifyToken, updateProfile);
-router.get('/order-history', verifyToken, getOrderHistory);
-
-export default router;
+module.exports = router;

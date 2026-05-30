@@ -1,38 +1,6 @@
 <section class="checkout">
   <h2>Resumen de compra</h2>
 
-  <div class="items-summary">
-    <h3>Productos</h3>
-    @if (carrito().length === 0) {
-      <p>Tu carrito está vacío</p>
-    } @else {
-      <table class="items-table">
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio unitario</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (item of carrito(); track item.id) {
-            <tr>
-              <td>{{ item.name }}</td>
-              <td>{{ item.cantidad }}</td>
-              <td>{{ item.price | currency: 'MXN' }}</td>
-              <td>{{ item.price * item.cantidad | currency: 'MXN' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-  </div>
-
-  <div class="total-section">
-    <h3>Total: {{ total() | currency: 'MXN' }}</h3>
-  </div>
-
   @if (error()) {
     <div class="error-message">
       {{ error() }}
@@ -40,27 +8,74 @@
   }
 
   @if (paymentApproved()) {
-    <div class="success-message">¡Pago completado exitosamente! Redirigiendo...</div>
+    <div class="success-message">Pago completado exitosamente. Redirigiendo...</div>
   }
 
-  @if (!paymentApproved()) {
-    <div class="actions">
-      @if (!orderId()) {
-        <button
-          class="btn primary"
-          (click)="crearOrdenPayPal()"
-          [disabled]="loading() || carrito().length === 0"
-        >
-          {{ loading() ? 'Creando orden...' : 'Crear orden PayPal' }}
-        </button>
-      } @else {
-        <div class="paypal-section">
-          <p>Orden creada: {{ orderId() }}</p>
-          <p>Completa el pago con el botón de PayPal</p>
-          <div #paypalButtonContainer id="paypal-button-container"></div>
+  <div class="checkout-layout" [class.summary-only]="paymentApproved()">
+    @if (!paymentApproved()) {
+      <div class="payment-panel">
+        <h3>Pago</h3>
+        <div class="actions">
+          @if (!orderId()) {
+            <button
+              class="btn primary"
+              (click)="crearOrdenPayPal()"
+              [disabled]="loading() || carrito().length === 0"
+            >
+              {{ loading() ? 'Creando orden...' : 'Crear orden PayPal' }}
+            </button>
+          } @else {
+            <div class="paypal-section">
+              <p>Orden creada: {{ orderId() }}</p>
+              <p>Completa el pago con el boton de PayPal</p>
+              <div #paypalButtonContainer id="paypal-button-container"></div>
+            </div>
+          }
+
+          <button class="btn" (click)="volver()">Volver al carrito</button>
         </div>
-      }
-      <button class="btn" (click)="volver()">Volver al carrito</button>
-    </div>
-  }
+      </div>
+    }
+
+    <aside class="summary-panel">
+      <div class="items-summary">
+        <h3>Productos</h3>
+        @if (carrito().length === 0) {
+          <p>Tu carrito esta vacio</p>
+        } @else {
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of carrito(); track item.id) {
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.cantidad }}</td>
+                  <td>{{ item.price | currency: 'MXN' }}</td>
+                  <td>{{ item.price * item.cantidad | currency: 'MXN' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+
+      <div class="total-section">
+        <p>Subtotal: {{ subtotal() | currency: 'MXN' }}</p>
+        <p>IVA: {{ iva() | currency: 'MXN' }}</p>
+        <h3>Total: {{ total() | currency: 'MXN' }}</h3>
+      </div>
+
+      <div class="legal-summary">
+        <a [href]="terminosUrl" target="_blank" rel="noopener">Leer terminos y condiciones</a>
+        <a [href]="avisoPrivacidadUrl" target="_blank" rel="noopener">Leer aviso de privacidad</a>
+      </div>
+    </aside>
+  </div>
 </section>

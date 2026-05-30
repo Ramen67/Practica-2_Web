@@ -23,51 +23,55 @@
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 12px;
   margin-right: 20px;
 }
 
-.nav-bar span {
-  padding: 10px 14px;
-  color: #212732;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.nav-bar span:hover {
-  background-color: #cdcdc4;
-  border-radius: 6px;
+.usuario-nombre {
+  font-size: 16px;
+  font-weight: 600;
 }
+
+.brand-link,
+.icon-link,
+.btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #212732;
+  background: transparent;
+  padding: 5px;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.brand-link:hover,
+.icon-link:hover,
+.btn-logout:hover {
+  background-color: #cdcdc4;
+  transform: translateY(-1px);
+}
+
+.material-icons {
+  color: #212732;
+  font-size: 30px;
+  line-height: 1;
+}
+
 .logo {
   width: 120px;
   height: 60px;
-  margin-left: 10px;
-}
-.titulo {
-  font-size: 26px;
-  font-weight: bold;
-}
-
-.carrito {
-  width: 38px;
-  height: 38px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  
-}
-.carrito:hover {
-  transform: scale(1.12);
-}
-.catalogo {
-  text-decoration: none;
-  color: #212732;
-  font-weight: 500;
-  font-size: 20px;
-  padding: 10px 14px;
-}
-
-.catalogo:hover {
-  background-color: #cdcdc4;
-  border-radius: 6px;
+  object-fit: contain;
 }

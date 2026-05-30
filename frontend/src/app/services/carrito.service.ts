@@ -4,6 +4,7 @@ import { CartItem } from '../models/carrito-item.model';
 
 @Injectable({ providedIn: 'root' })
 export class CarritoService {
+  private readonly ivaRate = 0.16;
   private itemsSignal = signal<CartItem[]>([]);
   items = this.itemsSignal.asReadonly();
 
@@ -78,16 +79,23 @@ export class CarritoService {
     this.itemsSignal.set([]);
   }
 
-  total(): number {
+  subtotal(): number {
     return this.itemsSignal().reduce((acc, item) => acc + item.price * item.cantidad, 0);
+  }
+
+  iva(): number {
+    return this.subtotal() * this.ivaRate;
+  }
+
+  total(): number {
+    return this.subtotal() + this.iva();
   }
 
   exportarXML() {
     const items = this.itemsSignal(); 
-    const total = this.total();
-    const iva = total * 0.16;
-    const subtotal = total;
-    const totalConIva = total + iva;
+    const subtotal = this.subtotal();
+    const iva = this.iva();
+    const totalConIva = this.total();
 
     // Generar folio único
     const folio = `TK-${String(Math.floor(Math.random() * 1000000)).padStart(6, '0')}`;

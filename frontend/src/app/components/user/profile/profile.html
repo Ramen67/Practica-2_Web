@@ -1,0 +1,53 @@
+<section class="profile-page">
+  <div class="profile-card">
+    <h2>Mi perfil</h2>
+
+    @if (cargando) {
+      <p class="state-message">Cargando tu informacion...</p>
+    } @else {
+      @if (error) {
+        <div class="alert error">{{ error }}</div>
+      }
+
+      @if (exito) {
+        <div class="alert success">{{ exito }}</div>
+      }
+
+      <div class="profile-meta">
+        <span><strong>ID:</strong> {{ perfil.id }}</span>
+        <span><strong>Rol:</strong> {{ perfil.rol }}</span>
+      </div>
+
+      <div class="legal-docs">
+        <a [href]="terminosUrl" target="_blank" rel="noopener">Leer terminos y condiciones</a>
+        <a [href]="avisoPrivacidadUrl" target="_blank" rel="noopener">Leer aviso de privacidad</a>
+      </div>
+
+      <form class="profile-form" (ngSubmit)="guardarPerfil()">
+        <label>
+          Nombre
+          <input type="text" [(ngModel)]="perfil.nombre" name="nombre" />
+        </label>
+
+        <label>
+          Correo electronico
+          <input type="email" [(ngModel)]="perfil.email" name="email" />
+        </label>
+
+        <label>
+          Domicilio
+          <input type="text" [(ngModel)]="perfil.domicilio" name="domicilio" />
+        </label>
+
+        <label>
+          Rol
+          <input type="text" [value]="perfil.rol" disabled />
+        </label>
+
+        <button class="btn-save" type="submit" [disabled]="guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </form>
+    }
+  </div>
+</section>

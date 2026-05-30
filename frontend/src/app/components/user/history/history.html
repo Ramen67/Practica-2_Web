@@ -1,0 +1,42 @@
+<section class="history-page">
+  <div class="history-card">
+    <h2>Mis compras</h2>
+
+    @if (cargando) {
+      <p class="state-message">Cargando tus compras...</p>
+    } @else if (error) {
+      <div class="alert error">{{ error }}</div>
+    } @else if (!tieneCompras()) {
+      <div class="empty-state">
+        <h3>No tienes compras</h3>
+        <p>Te invitamos a comprar.</p>
+        <a routerLink="/catalogo" class="btn-link">Ir al catálogo</a>
+      </div>
+    } @else {
+      <div class="purchase-list">
+        @for (compra of compras; track compra.id) {
+          <article class="purchase-card">
+            <div class="purchase-header">
+              <div>
+                <h3>Compra #{{ compra.id }}</h3>
+                <p>{{ compra.fecha | date: 'medium' }}</p>
+              </div>
+              <div class="purchase-total">
+                {{ compra.total | currency: 'MXN' }}
+              </div>
+            </div>
+
+            <div class="purchase-products">
+              @for (producto of compra.productos; track $index) {
+                <div class="product-row">
+                  <span class="product-name">{{ producto.name || producto.nombre }}</span>
+                  <span>Cantidad: {{ producto.cantidad || 1 }}</span>
+                </div>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

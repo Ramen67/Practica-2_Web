@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CarritoService } from '../../services/carrito.service';
 import { PaypalService } from '../../services/paypal.service';
+import { ComprasService } from '../../services/compras.service';
 
 declare global {
   interface Window {
@@ -26,13 +27,19 @@ declare global {
   styleUrl: './check.css',
 })
 export class Check implements AfterViewInit {
+  readonly avisoPrivacidadUrl = '/uploads/Avisos%20de%20privacidad.pdf';
+  readonly terminosUrl = '/uploads/Terminos%20y%20Condiciones.pdf';
+
   private router = inject(Router);
   private carritoService = inject(CarritoService);
   private paypalService = inject(PaypalService);
+  private comprasService = inject(ComprasService);
 
   @ViewChild('paypalButtonContainer') paypalButtonContainer?: ElementRef<HTMLDivElement>;
 
   carrito = computed(() => this.carritoService.items());
+  subtotal = computed(() => this.carritoService.subtotal());
+  iva = computed(() => this.carritoService.iva());
   total = computed(() => this.carritoService.total());
 
   loading = signal(false);
@@ -59,6 +66,8 @@ export class Check implements AfterViewInit {
 
     const payload = {
       items,
+      subtotal: this.subtotal(),
+      iva: this.iva(),
       total: this.total(),
     };
 
@@ -93,16 +102,24 @@ export class Check implements AfterViewInit {
       precio: item.price,
     }));
 
+    const itemsHistorial = items.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      cantidad: item.cantidad,
+      precio: item.precio,
+    }));
+
     this.paypalService.capturarOrden(id, items, this.total()).subscribe({
       next: (response) => {
         this.loading.set(false);
         this.paymentApproved.set(true);
         console.log('Pago capturado:', response);
-        this.carritoService.exportarXML();
-        setTimeout(() => {
-          this.carritoService.vaciar();
-          this.router.navigate(['/catalogo']);
-        }, 7000);
+        this.comprasService
+          .registrarCompra(itemsHistorial, this.subtotal(), this.iva(), this.total())
+          .subscribe({
+          next: () => undefined,
+          error: (err) => console.error('Error registrando compra:', err),
+          });
       },
       error: (err) => {
         this.loading.set(false);

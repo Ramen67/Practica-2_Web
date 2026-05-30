@@ -1,0 +1,136 @@
+<section class="admin-page">
+  <div class="admin-card">
+    <h2>Inventario</h2>
+
+    @if (cargando) {
+      <p class="state-message">Cargando inventario...</p>
+    } @else {
+      <article class="form-card">
+        <h3>Nuevo producto</h3>
+        <div class="form-grid">
+          <label>
+            Nombre
+            <input class="input" type="text" [(ngModel)]="nuevoProducto.nombre" />
+          </label>
+          <label>
+            Descripcion
+            <input class="input" type="text" [(ngModel)]="nuevoProducto.descripcion" />
+          </label>
+          <label>
+            Precio
+            <input class="input" type="number" [(ngModel)]="nuevoProducto.precio" />
+          </label>
+          <label>
+            Stock
+            <input class="input" type="number" [(ngModel)]="nuevoProducto.stock" />
+          </label>
+          <label>
+            Categoria
+            <input class="input" type="text" [(ngModel)]="nuevoProducto.category" />
+          </label>
+          <label class="wide-field">
+            Detalles
+            <textarea class="input" rows="3" [(ngModel)]="nuevoProducto.detalles"></textarea>
+          </label>
+          <label>
+            En stock
+            <select class="input" [(ngModel)]="nuevoProducto.inStock">
+              <option [ngValue]="true">Si</option>
+              <option [ngValue]="false">No</option>
+            </select>
+          </label>
+          <label>
+            Imagen
+            <input class="input" type="text" [(ngModel)]="nuevoProducto.imageUrl" />
+            <input
+              class="input"
+              type="file"
+              accept="image/*"
+              (change)="subirImagen($event, null)"
+            />
+            <span class="help">Archivo: {{ nuevoProducto.imageUrl || 'Sin imagen' }}</span>
+          </label>
+        </div>
+        <button class="btn primary" (click)="crearProducto()">Crear</button>
+      </article>
+
+      <div class="product-list">
+        @for (producto of productos; track producto.id) {
+          <article class="product-card">
+            <div class="product-header">
+              <h3>#{{ producto.id }} {{ producto.nombre }}</h3>
+              <div class="actions">
+                <button
+                  class="btn primary"
+                  (click)="guardarProducto(producto)"
+                  [disabled]="guardandoId === producto.id"
+                >
+                  {{ guardandoId === producto.id ? 'Guardando...' : 'Guardar' }}
+                </button>
+                <button class="btn danger" (click)="eliminarProducto(producto)">Desactivar</button>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                Nombre
+                <input class="input" type="text" [(ngModel)]="producto.nombre" />
+              </label>
+              <label>
+                Descripcion
+                <input class="input" type="text" [(ngModel)]="producto.descripcion" />
+              </label>
+              <label>
+                Precio
+                <input class="input" type="number" [(ngModel)]="producto.precio" />
+              </label>
+              <label>
+                Stock
+                <input class="input" type="number" [(ngModel)]="producto.stock" />
+              </label>
+              <label>
+                Categoria
+                <input class="input" type="text" [(ngModel)]="producto.category" />
+              </label>
+              <label class="wide-field">
+                Detalles
+                <textarea class="input" rows="3" [(ngModel)]="producto.detalles"></textarea>
+              </label>
+              <label>
+                En stock
+                <select class="input" [(ngModel)]="producto.inStock">
+                  <option [ngValue]="true">Si</option>
+                  <option [ngValue]="false">No</option>
+                </select>
+              </label>
+              <label>
+                Imagen
+                <input class="input" type="text" [(ngModel)]="producto.imageUrl" />
+                <input
+                  class="input"
+                  type="file"
+                  accept="image/*"
+                  (change)="subirImagen($event, producto)"
+                />
+                <span class="help">Archivo: {{ producto.imageUrl || 'Sin imagen' }}</span>
+                @if (nombreImagenPendiente(producto)) {
+                  <span class="help pending">
+                    Nueva imagen pendiente: {{ nombreImagenPendiente(producto) }}
+                  </span>
+                }
+              </label>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<div class="toast-container">
+  @for (t of toasts; track t.id) {
+    <div class="toast">
+      {{ t.texto }}
+    </div>
+  }
+</div>

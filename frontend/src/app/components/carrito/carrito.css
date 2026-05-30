@@ -90,11 +90,16 @@
   color: #f0fdfa;
 }
 
-.total {
+.totals-box {
   margin-top: 12px;
+  display: grid;
+  gap: 6px;
   font-weight: 700;
-  font-size: 20px;
   color: aliceblue;
+}
+
+.total {
+  font-size: 20px;
 }
 
 .actions {

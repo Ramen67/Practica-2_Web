@@ -7,7 +7,7 @@ const {
 
 async function createOrder(req, res) {
   try {
-    const { items, total } = req.body;
+    const { items, subtotal, iva, total } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
@@ -21,7 +21,7 @@ async function createOrder(req, res) {
       });
     }
 
-    const order = await createPaypalOrder({ items, total });
+    const order = await createPaypalOrder({ items, subtotal, iva, total });
 
     console.log("Order recibida:", JSON.stringify(order, null, 2));
 

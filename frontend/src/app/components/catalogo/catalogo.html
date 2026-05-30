@@ -4,11 +4,80 @@
 @if (products().length === 0) {
   <p>Cargando productos (o revisa la ruta del XML).</p>
 } @else {
-  <section class="grid">
-    @for (p of products(); track p.id) {
-      <app-product-card [product]="p" (add)="agregar($event)"></app-product-card>
-    }
-  </section>
+  <main class="catalogo-layout">
+    <aside class="filters-panel" aria-label="Filtros de catalogo">
+      <div class="filter-heading">
+        <span class="material-icons" aria-hidden="true">tune</span>
+        <h2>Filtros</h2>
+      </div>
+
+      <label class="filter-field">
+        Buscar
+        <input
+          type="search"
+          placeholder="Nombre, categoria..."
+          [value]="busqueda()"
+          (input)="actualizarBusqueda($event)"
+        />
+      </label>
+
+      <label class="filter-field">
+        Categoria
+        <select [value]="categoriaSeleccionada()" (change)="actualizarCategoria($event)">
+          <option value="todas">Todas</option>
+          @for (categoria of categorias(); track categoria) {
+            <option [value]="categoria">{{ categoria }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-field">
+        Disponibilidad
+        <select
+          [value]="disponibilidadSeleccionada()"
+          (change)="actualizarDisponibilidad($event)"
+        >
+          <option value="todos">Todos</option>
+          <option value="disponibles">Disponibles</option>
+          <option value="agotados">Agotados</option>
+        </select>
+      </label>
+
+      <label class="filter-field">
+        Ordenar
+        <select [value]="ordenSeleccionado()" (change)="actualizarOrden($event)">
+          <option value="nombre-asc">Nombre A-Z</option>
+          <option value="precio-asc">Menor precio</option>
+          <option value="precio-desc">Mayor precio</option>
+          <option value="stock-desc">Mas stock</option>
+        </select>
+      </label>
+
+      <button class="clear-filters" type="button" (click)="limpiarFiltros()">
+        <span class="material-icons" aria-hidden="true">restart_alt</span>
+      </button>
+    </aside>
+
+    <section class="catalogo-results">
+      <p class="results-count">
+        {{ productosFiltrados().length }} de {{ products().length }} productos
+      </p>
+
+      @if (productosFiltrados().length === 0) {
+        <div class="empty-state">No hay productos que coincidan con los filtros.</div>
+      } @else {
+        <section class="grid">
+          @for (p of productosFiltrados(); track p.id) {
+            <app-product-card
+              [product]="p"
+              [canBuy]="puedeComprar()"
+              (add)="agregar($event)"
+            ></app-product-card>
+          }
+        </section>
+      }
+    </section>
+  </main>
 }
 <div class="toast-container">
   @for (t of toasts(); track t.id) {
