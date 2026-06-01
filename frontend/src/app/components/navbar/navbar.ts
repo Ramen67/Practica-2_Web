@@ -51,6 +51,7 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.carritoService.vaciar();
     this.authService.logout();
     this.isLoggedIn = false;
     this.usuario = null;

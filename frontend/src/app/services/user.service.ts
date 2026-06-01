@@ -18,6 +18,13 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/update-profile`, { nombre, email, domicilio });
   }
 
+  changePassword(contraseniaActual: string, nuevaContrasenia: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/change-password`, {
+      contraseniaActual,
+      nuevaContrasenia,
+    });
+  }
+
   getOrderHistory(): Observable<any> {
     return this.http.get(`${this.apiUrl}/order-history`);
   }

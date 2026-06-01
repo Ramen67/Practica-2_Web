@@ -48,13 +48,13 @@ export class Register {
     }
 
     if (this.contrasenia !== this.confirmarContrasenia) {
-      this.error = 'Las contrasenas no coinciden';
+      this.error = 'Las contraseñas no coinciden';
       this.cdr.detectChanges();
       return;
     }
 
     if (this.contrasenia.length < 6) {
-      this.error = 'La contrasena debe tener al menos 6 caracteres';
+      this.error = 'La contraseña debe tener al menos 6 caracteres';
       this.cdr.detectChanges();
       return;
     }

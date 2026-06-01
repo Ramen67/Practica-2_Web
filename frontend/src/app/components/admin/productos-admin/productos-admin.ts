@@ -15,6 +15,7 @@ interface ProductoView {
   category: string;
   detalles: string;
   inStock: boolean;
+  isEnabled: boolean;
 }
 
 @Component({
@@ -44,6 +45,7 @@ export class AdminProductos implements OnInit {
     category: '',
     detalles: '',
     inStock: true,
+    isEnabled: true,
   };
 
   constructor(
@@ -94,6 +96,7 @@ export class AdminProductos implements OnInit {
       category: raw?.category ?? raw?.categoria ?? '',
       detalles: raw?.detalles ?? raw?.details ?? '',
       inStock: this.toBoolean(raw?.inStock ?? raw?.instock ?? raw?.in_stock),
+      isEnabled: this.toBoolean(raw?.isEnabled ?? raw?.isenabled ?? raw?.is_enabled ?? true),
     };
   }
 
@@ -114,7 +117,34 @@ export class AdminProductos implements OnInit {
     });
   }
 
+  private validarProducto(producto: Omit<ProductoView, 'id'>): string | null {
+    if (!producto.nombre.trim()) return 'El nombre es obligatorio';
+    if (!producto.descripcion.trim()) return 'La descripcion es obligatoria';
+    if (!producto.category.trim()) return 'La categoria es obligatoria';
+    if (!producto.detalles.trim()) return 'Los detalles son obligatorios';
+    if (!producto.imageUrl.trim()) return 'La imagen es obligatoria';
+
+    const precio = Number(producto.precio);
+    const stock = Number(producto.stock);
+
+    if (!Number.isFinite(precio) || precio <= 0) {
+      return 'El precio debe ser mayor a 0';
+    }
+
+    if (!Number.isInteger(stock) || stock < 0) {
+      return 'El stock debe ser un numero entero mayor o igual a 0';
+    }
+
+    return null;
+  }
+
   crearProducto(): void {
+    const errorValidacion = this.validarProducto(this.nuevoProducto);
+    if (errorValidacion) {
+      this.agregarToast(errorValidacion);
+      return;
+    }
+
     this.inventarioService
       .crearProducto({
         ...this.nuevoProducto,
@@ -143,6 +173,7 @@ export class AdminProductos implements OnInit {
             category: '',
             detalles: '',
             inStock: true,
+            isEnabled: true,
           };
           this.cdr.detectChanges();
         },
@@ -154,35 +185,46 @@ export class AdminProductos implements OnInit {
   }
 
   guardarProducto(producto: ProductoView): void {
-    this.guardandoId = producto.id;
     const imagenPendiente = this.imagenesPendientes.get(producto.id);
+    const errorValidacion = this.validarProducto({
+      ...producto,
+      imageUrl: imagenPendiente ? 'pendiente' : producto.imageUrl,
+    });
+
+    if (errorValidacion) {
+      this.agregarToast(errorValidacion);
+      return;
+    }
+
+    this.guardandoId = producto.id;
 
     const actualizarConImagen = (imageUrl: string) => {
-      this.inventarioService.actualizarProducto(producto.id, {
-        nombre: producto.nombre,
-        descripcion: producto.descripcion,
-        precio: Number(producto.precio),
-        stock: Number(producto.stock),
-        imageUrl,
-        category: producto.category,
-        detalles: producto.detalles,
-        inStock: producto.inStock,
-      })
-      .subscribe({
-        next: () => {
-          producto.imageUrl = imageUrl;
-          this.imagenesPendientes.delete(producto.id);
-          this.nombresImagenesPendientes.delete(producto.id);
-          this.guardandoId = null;
-          this.agregarToast('Producto actualizado');
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          this.guardandoId = null;
-          this.agregarToast(error?.error?.error || 'No se pudo actualizar el producto');
-          this.cdr.detectChanges();
-        },
-      });
+      this.inventarioService
+        .actualizarProducto(producto.id, {
+          nombre: producto.nombre,
+          descripcion: producto.descripcion,
+          precio: Number(producto.precio),
+          stock: Number(producto.stock),
+          imageUrl,
+          category: producto.category,
+          detalles: producto.detalles,
+          inStock: producto.inStock,
+        })
+        .subscribe({
+          next: () => {
+            producto.imageUrl = imageUrl;
+            this.imagenesPendientes.delete(producto.id);
+            this.nombresImagenesPendientes.delete(producto.id);
+            this.guardandoId = null;
+            this.agregarToast('Producto actualizado');
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            this.guardandoId = null;
+            this.agregarToast(error?.error?.error || 'No se pudo actualizar el producto');
+            this.cdr.detectChanges();
+          },
+        });
     };
 
     if (imagenPendiente) {
@@ -205,18 +247,20 @@ export class AdminProductos implements OnInit {
   }
 
   eliminarProducto(producto: ProductoView): void {
-    if (!confirm(`Desactivar ${producto.nombre}?`)) {
+    const accion = producto.isEnabled ? 'Desactivar' : 'Activar';
+
+    if (!confirm(`${accion} ${producto.nombre}?`)) {
       return;
     }
 
-    this.inventarioService.eliminarProducto(producto.id).subscribe({
+    this.inventarioService.cambiarEstadoProducto(producto.id, !producto.isEnabled).subscribe({
       next: () => {
-        this.productos = this.productos.filter((item) => item.id !== producto.id);
-        this.agregarToast('Producto desactivado');
+        producto.isEnabled = !producto.isEnabled;
+        this.agregarToast(producto.isEnabled ? 'Producto activado' : 'Producto desactivado');
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.agregarToast(error?.error?.error || 'No se pudo desactivar el producto');
+        this.agregarToast(error?.error?.error || 'No se pudo cambiar el estado del producto');
         this.cdr.detectChanges();
       },
     });

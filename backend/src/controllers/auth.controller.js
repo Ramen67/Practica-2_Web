@@ -5,7 +5,14 @@ const jwt = require("jsonwebtoken");
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const register = async (req, res) => {
-  const { email, contrasenia, nombre, domicilio, aceptaTerminos, aceptaPrivacidad } = req.body;
+  const {
+    email,
+    contrasenia,
+    nombre,
+    domicilio,
+    aceptaTerminos,
+    aceptaPrivacidad,
+  } = req.body;
   const cleanEmail = typeof email === "string" ? email.trim() : "";
   const cleanNombre = typeof nombre === "string" ? nombre.trim() : "";
   const cleanDomicilio = typeof domicilio === "string" ? domicilio.trim() : "";
@@ -13,7 +20,9 @@ const register = async (req, res) => {
   if (!cleanEmail || !contrasenia || !cleanNombre || !cleanDomicilio) {
     return res
       .status(400)
-      .json({ error: "Email, contrasena, nombre y domicilio son obligatorios" });
+      .json({
+        error: "Email, contraseña, nombre y domicilio son obligatorios",
+      });
   }
 
   if (!isValidEmail(cleanEmail)) {
@@ -23,7 +32,7 @@ const register = async (req, res) => {
   if (contrasenia.length < 6) {
     return res
       .status(400)
-      .json({ error: "La contrasena debe tener al menos 6 caracteres" });
+      .json({ error: "La contraseña debe tener al menos 6 caracteres" });
   }
 
   if (aceptaTerminos !== true || aceptaPrivacidad !== true) {
@@ -77,7 +86,7 @@ const login = async (req, res) => {
   if (!cleanEmail || !contrasenia) {
     return res
       .status(400)
-      .json({ error: "Email y contrasena son obligatorios" });
+      .json({ error: "Email y contraseña son obligatorios" });
   }
 
   const sql = "SELECT * FROM usuarios WHERE email = ?";
@@ -91,10 +100,13 @@ const login = async (req, res) => {
     }
 
     const usuario = resultados[0];
-    const validPassword = await bcrypt.compare(contrasenia, usuario.contrasenia);
+    const validPassword = await bcrypt.compare(
+      contrasenia,
+      usuario.contrasenia,
+    );
 
     if (!validPassword) {
-      return res.status(401).json({ error: "La contrasena es incorrecta" });
+      return res.status(401).json({ error: "La contraseña es incorrecta" });
     }
 
     const token = jwt.sign(

@@ -6,11 +6,11 @@
       <p class="state-message">Cargando tu informacion...</p>
     } @else {
       @if (error) {
-        <div class="alert error">{{ error }}</div>
+        <div #profileMessage class="alert error">{{ error }}</div>
       }
 
       @if (exito) {
-        <div class="alert success">{{ exito }}</div>
+        <div #profileMessage class="alert success">{{ exito }}</div>
       }
 
       <div class="profile-meta">
@@ -18,10 +18,7 @@
         <span><strong>Rol:</strong> {{ perfil.rol }}</span>
       </div>
 
-      <div class="legal-docs">
-        <a [href]="terminosUrl" target="_blank" rel="noopener">Leer terminos y condiciones</a>
-        <a [href]="avisoPrivacidadUrl" target="_blank" rel="noopener">Leer aviso de privacidad</a>
-      </div>
+      
 
       <form class="profile-form" (ngSubmit)="guardarPerfil()">
         <label>
@@ -48,6 +45,46 @@
           {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
         </button>
       </form>
+
+      <section class="password-section">
+        <h3>Cambiar contrasena</h3>
+        <div class="profile-form">
+          <label>
+            Nueva contrasena
+            <input type="password" [(ngModel)]="nuevaContrasenia" name="nuevaContrasenia" />
+          </label>
+
+          <label>
+            Confirmar nueva contrasena
+            <input
+              type="password"
+              [(ngModel)]="confirmarNuevaContrasenia"
+              name="confirmarNuevaContrasenia"
+            />
+          </label>
+
+          <button
+            class="btn-save"
+            type="button"
+            (click)="cambiarContrasenia()"
+            [disabled]="cambiandoContrasenia"
+          >
+            {{ cambiandoContrasenia ? 'Cambiando...' : 'Cambiar contrasena' }}
+          </button>
+
+          @if (passwordError) {
+            <div #passwordMessage class="alert error password-alert">{{ passwordError }}</div>
+          }
+
+          @if (passwordExito) {
+            <div #passwordMessage class="alert success password-alert">{{ passwordExito }}</div>
+          }
+        </div>
+      </section>
+      <div class="legal-docs">
+        <a [href]="terminosUrl" target="_blank" rel="noopener">Leer terminos y condiciones</a>
+        <a [href]="avisoPrivacidadUrl" target="_blank" rel="noopener">Leer aviso de privacidad</a>
+      </div>
     }
   </div>
 </section>

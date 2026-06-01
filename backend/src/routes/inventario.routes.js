@@ -10,6 +10,7 @@ const {
   crearProducto,
   actualizarProducto,
   eliminarProducto,
+  cambiarEstadoProducto,
   obtenerProductos,
 } = require("../controllers/inventario.controller");
 
@@ -49,6 +50,7 @@ router.post(
 );
 router.post("/", verifyToken, adminMiddleware, crearProducto);
 router.put("/:id", verifyToken, adminMiddleware, actualizarProducto);
+router.patch("/:id/estado", verifyToken, adminMiddleware, cambiarEstadoProducto);
 router.delete("/:id", verifyToken, adminMiddleware, eliminarProducto);
 
 module.exports = router;

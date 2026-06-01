@@ -117,8 +117,15 @@ export class Check implements AfterViewInit {
         this.comprasService
           .registrarCompra(itemsHistorial, this.subtotal(), this.iva(), this.total())
           .subscribe({
-          next: () => undefined,
-          error: (err) => console.error('Error registrando compra:', err),
+            next: () => {
+              setTimeout(() => this.router.navigate(['/catalogo']), 5000);
+              setTimeout(() => this.carritoService.vaciar(),5000);
+            },
+            error: (err) => {
+              console.error('Error registrando compra:', err);
+              setTimeout(() => this.router.navigate(['/catalogo']), 5000);
+              setTimeout(() => this.carritoService.vaciar(),5000);
+            },
           });
       },
       error: (err) => {

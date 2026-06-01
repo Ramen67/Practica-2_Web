@@ -19,9 +19,6 @@
     }
 
     <div *ngIf="isLoggedIn" class="user-menu">
-      <a routerLink="/profile" class="icon-link" aria-label="Mi perfil" title="Mi perfil">
-        <span class="material-icons" aria-hidden="true">account_circle</span>
-      </a>
       @if (isAdmin()) {
         <a
           routerLink="/admin-productos"
@@ -32,6 +29,9 @@
           <span class="material-icons" aria-hidden="true">inventory_2</span>
         </a>
       } @else {
+        <a routerLink="/profile" class="icon-link" aria-label="Mi perfil" title="Mi perfil">
+          <span class="material-icons" aria-hidden="true">account_circle</span>
+        </a>
         <a routerLink="/history" class="icon-link" aria-label="Mis compras" title="Mis compras">
           <span class="material-icons" aria-hidden="true">receipt_long</span>
         </a>

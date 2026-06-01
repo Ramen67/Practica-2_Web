@@ -43,6 +43,10 @@ export class InventarioService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  cambiarEstadoProducto(id: number, isEnabled: boolean): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/estado`, { isEnabled });
+  }
+
   obtenerProductos(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);
   }

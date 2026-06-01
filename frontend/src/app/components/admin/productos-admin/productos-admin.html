@@ -60,6 +60,9 @@
             <div class="product-header">
               <h3>#{{ producto.id }} {{ producto.nombre }}</h3>
               <div class="actions">
+                <span class="state-message" [class.disabled-state]="!producto.isEnabled">
+                  {{ producto.isEnabled ? 'Activo' : 'Desactivado' }}
+                </span>
                 <button
                   class="btn primary"
                   (click)="guardarProducto(producto)"
@@ -67,7 +70,9 @@
                 >
                   {{ guardandoId === producto.id ? 'Guardando...' : 'Guardar' }}
                 </button>
-                <button class="btn danger" (click)="eliminarProducto(producto)">Desactivar</button>
+                <button class="btn danger" (click)="eliminarProducto(producto)">
+                  {{ producto.isEnabled ? 'Desactivar' : 'Activar' }}
+                </button>
               </div>
             </div>
 
